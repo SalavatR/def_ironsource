@@ -10,12 +10,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "ISGender.h"
 #import "ISBannerDelegate.h"
 #import "ISRewardedVideoDelegate.h"
 #import "ISOfferwallDelegate.h"
 #import "ISInterstitialDelegate.h"
-#import "ISRewardedInterstitialDelegate.h"
 #import "ISLogDelegate.h"
 #import "ISConfigurations.h"
 #import "ISPlacementInfo.h"
@@ -27,6 +25,8 @@
 #import "ISDemandOnlyRewardedVideoDelegate.h"
 #import "ISDemandOnlyInterstitialDelegate.h"
 #import "ISBannerSize.h"
+#import "ISImpressionDataDelegate.h"
+#import "ISConsentViewDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,8 +35,14 @@ NS_ASSUME_NONNULL_BEGIN
 #define IS_OFFERWALL @"offerwall"
 #define IS_BANNER @"banner"
 
-static NSString * const MEDIATION_SDK_VERSION     = @"6.15.0";
-static NSString * GitHash = @"b4c67f001";
+static NSString * const MEDIATION_SDK_VERSION     = @"7.1.7";
+static NSString * GitHash = @"c065eca39";
+
+/*
+    This constant is for sending an external impression data from mopub
+*/
+static NSString * const DataSource_MOPUB     = @"MoPub";
+
 
 @interface IronSource : NSObject
 
@@ -47,23 +53,6 @@ static NSString * GitHash = @"b4c67f001";
  @return NSString representing the current IronSource SDK version.
  */
 + (NSString *)sdkVersion;
-
-
-/**
- @abstact Sets a numeric representation of the current user's age.
- @discussion This value will be passed to the supporting ad networks.
-
- @param age The user's age. Should be between 5 and 120.
- */
-+ (void)setAge:(NSInteger)age;
-
-/**
- @abstact Sets the gender of the current user.
- @discussion This value will be passed to the supporting ad networks.
-
- @param gender The user's gender.
- */
-+ (void)setGender:(ISGender)gender;
 
 /**
  @abstract Sets if IronSource SDK should track network changes.
@@ -118,7 +107,7 @@ static NSString * GitHash = @"b4c67f001";
  
  @param segment A segment name, which should not exceed 64 characters.
  */
-+ (void)setMediationSegment:(NSString *)segment;
++ (void)setMediationSegment:(NSString *)segment __attribute__((deprecated("This method has been deprecated and won’t be included in ironSource SDK versions 7.2.0 and above.")));
 
 /**
  @abstract Sets a segment.
@@ -145,6 +134,16 @@ static NSString * GitHash = @"b4c67f001";
 
 */
 + (void)setMetaDataWithKey:(NSString *)key value:(NSString *)value;
+
+/**
+ @abstact Sets the meta data with a key and values.
+ @discussion This value will be passed to the supporting ad networks.
+ 
+ @param key The meta data key.
+ @param values The meta data values
+ 
+ */
++ (void)setMetaDataWithKey:(NSString *)key values:(NSMutableArray *) values;
 
 /**
 @abstact used for demand only API, return the bidding data token.
@@ -298,13 +297,6 @@ static NSString * GitHash = @"b4c67f001";
  @param delegate The 'ISInterstitialDelegate' for IronSource to send callbacks to.
  */
 + (void)setInterstitialDelegate:(id<ISInterstitialDelegate>)delegate;
-
-/**
- @abstract Sets the delegate for rewarded interstitial callbacks.
- 
- @param delegate The 'ISRewardedInterstitialDelegate' for IronSource to send callbacks to.
- */
-+ (void)setRewardedInterstitialDelegate:(id<ISRewardedInterstitialDelegate>)delegate;
 
 /**
  @abstract Loads an interstitial.
@@ -487,8 +479,81 @@ static NSString * GitHash = @"b4c67f001";
 
 + (void)setConsent:(BOOL)consent;
 
+
+#pragma mark - Impression Data
+
+/**
+ @abstract Sets the delegate for impression data callbacks.
+
+ @param delegate The 'ISImpressionDataDelegate' for IronSource to send callbacks to.
+ */
+
++ (void)setImpressionDataDelegate:(id<ISImpressionDataDelegate>)delegate __attribute__((deprecated("This method has been deprecated and won’t be included in ironSource SDK versions 7.2.0 and above. Please use addImpressionDataDelegate instead.")));
+
+/**
+ @abstract Adds the delegate for impression data callbacks.
+
+ @param delegate The 'ISImpressionDataDelegate' for IronSource to send callbacks to.
+ */
+
+
++ (void)addImpressionDataDelegate:(id<ISImpressionDataDelegate>)delegate;
+
+/**
+ @abstract Ad revenue data
+ 
+ @param dataSource the external source id from which the impression data is sent.
+ @param impressionData the impression data
+
+ */
++ (void)setAdRevenueDataWithDataSource:(NSString *)dataSource
+                        impressionData:(NSData *)impressionData;
+
+
+
+/**
+ @abstract Removes  the delegate from impression data callbacks.
+
+ @param delegate The 'ISImpressionDataDelegate' for IronSource to send callbacks to.
+ */
+
++ (void)removeImpressionDataDelegate:(id<ISImpressionDataDelegate>)delegate;
+
+
+#pragma mark - Consent View
+
+/**
+ @abstract Sets the delegate for consent view callbacks.
+ 
+ @param delegate The 'ISConsentViewDelegate' for IronSource to send callbacks to.
+ */
++ (void)setConsentViewWithDelegate:(id<ISConsentViewDelegate>)delegate;
+
+/**
+ @abstract Load consent view.
+ 
+ @param consentViewType The type of the view (pre/post).
+ */
++ (void)loadConsentViewWithType:(NSString *)consentViewType;
+
+/**
+ @abstract Show consent view after load.
+ 
+ @param consentViewType The type of the view (pre/post).
+ */
++ (void)showConsentViewWithViewController:(UIViewController *)viewController andType:(NSString *)consentViewType;
+
+
+#pragma mark - Conversion Value (CV)
+
+/**
+ @abstract get current conversion value
+*/
++ (NSNumber *)getConversionValue;
+
 @end
 
 NS_ASSUME_NONNULL_END
+
 
 #endif

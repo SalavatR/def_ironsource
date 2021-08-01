@@ -26,5 +26,5 @@ bundle_identifier = com.defironsource.test
 package = com.defironsource.test
 
 [ironsource]
-app_key = b587fdad
-
+app_id = 103345771
+ios_tracking_usage_description = We will use your data to provide a better and personalized ad experience.

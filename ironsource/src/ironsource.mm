@@ -6,6 +6,7 @@
 #include "IronSource/IronSource.h"
 
 #include <UIKit/UIKit.h>
+#include <FBAudienceNetwork/FBAdSettings.h>
 
 UIViewController *uiViewController;
 
@@ -110,6 +111,7 @@ void Ironsource_SetConsent(bool consent) {
 }
 
 void Ironsource_Init(const char* api_key) {
+    [FBAdSettings setAdvertiserTrackingEnabled:YES];
     [IronSource initWithAppKey:[NSString stringWithUTF8String:api_key]];
 
     UIWindow* window = dmGraphics::GetNativeiOSUIWindow();

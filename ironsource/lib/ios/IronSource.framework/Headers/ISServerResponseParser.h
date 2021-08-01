@@ -12,6 +12,11 @@
 #import "ISEventsSettings.h"
 #import "ISLoggersSettings.h"
 #import "ISAuctionSettings.h"
+#import "ISTokenSettings.h"
+#import "ISCrashReporterSettings.h"
+#import "ISApplicationSettings.h"
+#import "ISExternalSettings.h"
+#import "ISSKAdNetworkSettings.h"
 
 @interface ISServerResponseParser : NSObject
 
@@ -33,6 +38,11 @@
 
 @property (nonatomic, strong) ISLoggersSettings                   *loggers;
 @property (nonatomic, strong) ISAuctionSettings                   *auctionSettings;
+@property (nonatomic, strong) ISTokenSettings                     *tokenSettings;
+@property (nonatomic, strong) ISCrashReporterSettings             *crashReporterSettings;
+@property (nonatomic, strong) ISApplicationSettings               *applicationSettings;
+@property (nonatomic, strong) ISExternalSettings                  *externalSettings;
+@property (nonatomic, strong) ISSKAdNetworkSettings               *skanSettings;
 
 @property (nonatomic, strong) NSString                            *segmentName;
 @property (nonatomic, strong) NSString                            *segmentId;
@@ -43,5 +53,5 @@
 + (ISServerResponseParser *)sharedInstance;
 -  (void)parseObject:(id)object;
 
-- (NSArray *)getConfigForProvider:(NSString *)provider withKey:(NSString *)key;
+- (NSArray *)getConfigForProvider:(NSString *)provider;
 @end

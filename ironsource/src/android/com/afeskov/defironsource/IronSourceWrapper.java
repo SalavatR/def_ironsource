@@ -39,7 +39,7 @@ public class IronSourceWrapper {
     }
 
     public void init(String appKey) {
-        IronSource.init(activity, appKey);
+        IronSource.init(activity, appKey, IronSource.AD_UNIT.INTERSTITIAL, IronSource.AD_UNIT.REWARDED_VIDEO);
         IronSource.setRewardedVideoListener(rewardedVideoListener);
         IronSource.setInterstitialListener(interstitialListener);
     }
