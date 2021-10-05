@@ -118,9 +118,11 @@ public class IronSourceWrapper {
 
         @Override
         public void onRewardedVideoAdRewarded(Placement placement) {
-            int placementId = placement.getPlacementId();
-            String placementName = placement.getPlacementName();
-            IronSourceWrapper.onRewardedVideoAdRewarded(placementId, placementName);
+            if (placement != null) {
+                int placementId = placement.getPlacementId();
+                String placementName = placement.getPlacementName();
+                IronSourceWrapper.onRewardedVideoAdRewarded(placementId, placementName);
+            }
         }
 
         @Override
@@ -132,9 +134,11 @@ public class IronSourceWrapper {
 
         @Override
         public void onRewardedVideoAdClicked(Placement placement) {
-            int placementId = placement.getPlacementId();
-            String placementName = placement.getPlacementName();
-            IronSourceWrapper.onRewardedVideoAdClicked(placementId, placementName);
+            if (placement != null) {
+                int placementId = placement.getPlacementId();
+                String placementName = placement.getPlacementName();
+                IronSourceWrapper.onRewardedVideoAdClicked(placementId, placementName);
+            }
         }
     }
 
